@@ -52,8 +52,8 @@ struct Characters : Decodable{
 //    let next: String?
 //}
 struct Character : Decodable {
-    var name: String?
-    let image: String?
+    var name: String
+    let image: String
     let location: location?
     let gender: String?
     let url: String?

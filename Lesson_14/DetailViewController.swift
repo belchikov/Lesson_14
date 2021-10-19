@@ -15,8 +15,9 @@ protocol ShowDetailDelegate {
 }
 class DetailViewController: UIViewController, ShowDetailDelegate{
 
-    var MyDelegate : ShowDetailDelegate?
+    //var MyDelegate : ShowDetailDelegate?
     var DetailUrl: String?
+    var Character: Character?
     
     @IBOutlet weak var DetailImage: UIImageView!
     @IBOutlet weak var DetailTitle: UILabel!
@@ -24,11 +25,16 @@ class DetailViewController: UIViewController, ShowDetailDelegate{
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.DetailTitle.text = Character?.name
+        self.DetailLocation.text = Character?.location?.name
+        MyLoader().downloadImage(Character!.image){ image in
+            self.DetailImage.image = image
+        }
     }
     
     func setDetailUrl(_ url: String) {
         MyLoader().loadCharacter(detailurl: url){ character in
-            MyLoader().downloadImage(character.image!){ image in
+            MyLoader().downloadImage(character.image){ image in
                 self.DetailImage.image = image
             }
             self.DetailTitle.text = character.name

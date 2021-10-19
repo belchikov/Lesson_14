@@ -46,7 +46,7 @@ class RikViewController: UIViewController, UITableViewDataSource, UITableViewDel
         CharacterCell.CharacterProp.text = character.gender
         CharacterCell.CharacterLocation.text = character.location!.name
         CharacterCell.detalUrl = character.url
-        MyLoader().downloadImage(character.image!){ image in
+        MyLoader().downloadImage(character.image){ image in
             CharacterCell.CharacterImage.image = image
         }
         return CharacterCell
@@ -60,8 +60,11 @@ class RikViewController: UIViewController, UITableViewDataSource, UITableViewDel
         if  segue.identifier == "DetailViewControllerShow" {
             let indexRow = characterTable.indexPathForSelectedRow?.row
             let detail = segue.destination as? DetailViewController
-            detail?.setDetailUrl(characters[indexRow!].url!)
-            //MyDelegate?.setDetailUrl(characters[indexRow!].detailUrl)
+            
+            //c подгрузкой
+            //detail?.setDetailUrl(characters[indexRow!].url!)
+            
+            detail?.Character = characters[indexRow!]
         }
     }
 }
