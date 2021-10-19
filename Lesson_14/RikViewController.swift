@@ -15,43 +15,41 @@ class RikViewController: UIViewController, UITableViewDataSource, UITableViewDel
     @IBOutlet weak var characterTable: UITableView!
     
     //var characters: [Characters] = []
-    var characters = [Any]()
+    //var characters : [results] = []
+    //var characters : [result] = []
+    var characters : [Character] = []
+    //var characters : [Any] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
         MyLoader().loadCharacters { characters in
-            
             //я вот тут не понимаю как из characters.results данные добавить в var characters: [Characters] = []
-            
-            //debugPrint(characters.results)
-            //debugPrint(type(of: characters.results))
-            //self.characters = characters.results
+            self.characters = characters.results!
             self.characterTable.reloadData()
         }
     }
     
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        //debugPrint(characters.count)
         return characters.count
-        //return 5
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let CharacterCell = tableView.dequeueReusableCell(withIdentifier: "CharacterCell", for: indexPath) as! CharacterTableViewCell
         let character = characters[indexPath.row]
         
-//      CharacterCell.initCell(item: characters[indexPath.row])
-//      CharacterCell.CharacterName.text = character.name
-//      CharacterCell.CharacterProp.text = character.Prop
-//      CharacterCell.CharacterLocation.text = character.Location
-//      CharacterCell.detalUrl = character.detailUrl
-//      MyLoader().downloadImage(character.imageURL){ image in
-//       CharacterCell.CharacterImage.image = image
-//      }
+        //print(character)
+        //print(character.name)
+        //print(character.location)
         
+        CharacterCell.CharacterName.text = character.name
+        CharacterCell.CharacterProp.text = character.gender
+        CharacterCell.CharacterLocation.text = character.location!.name
+        CharacterCell.detalUrl = character.url
+        MyLoader().downloadImage(character.image!){ image in
+            CharacterCell.CharacterImage.image = image
+        }
         return CharacterCell
-        //return UITableViewCell()
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -59,17 +57,12 @@ class RikViewController: UIViewController, UITableViewDataSource, UITableViewDel
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        
-        //        if  segue.identifier == "DetailViewControllerShow" {
-        //            let indexRow = characterTable.indexPathForSelectedRow?.row
-        //
-        //            let detail = segue.destination as? DetailViewController
-        //            //detail?.DetailUrl = characters[indexRow!].detailUrl
-        //            detail?.setDetailUrl(characters[indexRow!].detailUrl)
-        //
-        //            //print(characters[indexRow!].detailUrl)
-        //            //MyDelegate?.setDetailUrl(characters[indexRow!].detailUrl)
-        //        }
+        if  segue.identifier == "DetailViewControllerShow" {
+            let indexRow = characterTable.indexPathForSelectedRow?.row
+            let detail = segue.destination as? DetailViewController
+            detail?.setDetailUrl(characters[indexRow!].url!)
+            //MyDelegate?.setDetailUrl(characters[indexRow!].detailUrl)
+        }
     }
 }
 

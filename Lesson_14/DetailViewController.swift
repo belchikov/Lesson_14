@@ -15,7 +15,7 @@ protocol ShowDetailDelegate {
 }
 class DetailViewController: UIViewController, ShowDetailDelegate{
 
-    //var MyDelegate : ShowDetailDelegate?
+    var MyDelegate : ShowDetailDelegate?
     var DetailUrl: String?
     
     @IBOutlet weak var DetailImage: UIImageView!

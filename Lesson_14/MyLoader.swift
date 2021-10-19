@@ -5,7 +5,7 @@
 //  Created by Александр Бельчиков on 25.05.2021.
 //
 
-import UIKit
+//import UIKit
 import Foundation
 import Alamofire
 import AlamofireImage
@@ -41,38 +41,33 @@ class MyLoader {
 
 
 struct Characters : Decodable{
-    var info: info?
-    var results: [result]?
+    //var info: info?
+    var results: [Character]?
     enum CodingKeys: String, CodingKey {
         case results = "results"
     }
 }
-
-struct info : Decodable {
-    let count: String?
-    let next: String?
-}
-
-struct result : Decodable {
-    var name: String?
-    //var Prop: String?
-    let location: location?
-}
-
+//struct info : Decodable {
+//    let count: String?
+//    let next: String?
+//}
 struct Character : Decodable {
     var name: String?
     let image: String?
     let location: location?
+    let gender: String?
+    let url: String?
     enum CodingKeys: String, CodingKey {
         case name = "name"
         case image
         case location
+        case gender
+        case url
     }
 }
-
 struct location : Decodable {
-    let name: String?
-    let url: String?
+    let name: String
+    let url: String
 }
 
 
