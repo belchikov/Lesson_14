@@ -1,0 +1,6 @@
+use_frameworks!
+target 'Lesson_14' do
+pod 'Alamofire', '~> 5.4'
+pod 'AlamofireImage', '~> 4.1'
+pod 'RealmSwift'
+end
