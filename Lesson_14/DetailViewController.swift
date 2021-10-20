@@ -10,10 +10,10 @@
 
 import UIKit
 
-protocol ShowDetailDelegate {
-    func setDetailUrl(_ url : String)
-}
-class DetailViewController: UIViewController, ShowDetailDelegate{
+//protocol ShowDetailDelegate {
+//    func setDetailUrl(_ url : String)
+//}
+class DetailViewController: UIViewController{
 
     //var MyDelegate : ShowDetailDelegate?
     var DetailUrl: String?

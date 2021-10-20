@@ -13,8 +13,8 @@ import AlamofireImage
 class MyLoader {
     
     //Листинг Персонажей
-    func loadCharacters(completion: @escaping (Characters) -> Void){
-        AF.request("https://rickandmortyapi.com/api/character").responseDecodable(of: Characters.self) { response in
+    func loadCharacters(currentPage: Int, completion: @escaping (Characters) -> Void){
+        AF.request("https://rickandmortyapi.com/api/character?page=\(currentPage)").responseDecodable(of: Characters.self) { response in
             guard let char_list = response.value else { return }
             completion(char_list)
         }
@@ -69,29 +69,3 @@ struct location : Decodable {
     let name: String
     let url: String
 }
-
-
-//class Characters{
-//
-//    let name, Prop, Location, imageURL, detailUrl: String
-//    init?(data: NSDictionary){
-//        guard let name = data["name"] as? String,
-//              let imageURL = data["image"] as? String,
-//              let Prop_1 = data["gender"] as? String,
-//              let Prop_2 = data["species"] as? String,
-//              let Prop_3 = data["status"] as? String,
-//
-//              let Location = data["location"] as? [String: AnyObject],
-//              let LocationName = Location["name"] as? String,
-//
-//              let detailUrl = data["url"] as? String
-//        else {
-//            return nil
-//        }
-//        self.name = name
-//        self.Prop = Prop_3 + " - " + Prop_1 + " - " + Prop_2
-//        self.Location = LocationName
-//        self.imageURL = imageURL
-//        self.detailUrl = detailUrl
-//    }
-//}
