@@ -12,19 +12,22 @@ import Foundation
 class RikViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
     //var isLoading = false
-    var currentPage = 1
-    var totalPages = 34
+    //var currentPage = 1
+    //var totalPages = 34
     //var totalItemsPage = 20
     
     @IBOutlet weak var characterTable: UITableView!
     
     var characters : [Character] = []
-    
+    var currentPageUrl = "https://rickandmortyapi.com/api/character?page=1"
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        MyLoader().loadCharacters(currentPage: currentPage) { characters in
+        MyLoader().loadCharacters(apipage: self.currentPageUrl) { characters in
             self.characters = characters.results!
+            if characters.info.next != nil {
+                self.currentPageUrl = characters.info.next!
+            }
             self.characterTable.reloadData()
         }
     }
@@ -34,15 +37,13 @@ class RikViewController: UIViewController, UITableViewDataSource, UITableViewDel
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
-        if indexPath.row + 1 == self.characters.count && self.currentPage < totalPages{
-            self.currentPage = self.currentPage + 1
-            //print(currentPage)
-            //print(indexPath.row)
-            //print("loadMoreData");
-            MyLoader().loadCharacters(currentPage: currentPage) { characters in
-                //self.characters = characters.results!
+        //условие что дошли до последней строки таблицы (можно сделать подгрузку еще)
+        if indexPath.row + 1 == self.characters.count{
+            //self.currentPage = self.currentPage + 1
+            MyLoader().loadCharacters(apipage: self.currentPageUrl) { characters in
+                guard characters.info.next != nil else { return }
                 self.characters += characters.results!
+                self.currentPageUrl = characters.info.next!
                 DispatchQueue.main.async {
                     self.characterTable.reloadData()
                 }

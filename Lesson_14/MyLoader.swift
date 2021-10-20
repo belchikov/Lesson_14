@@ -13,8 +13,8 @@ import AlamofireImage
 class MyLoader {
     
     //Листинг Персонажей
-    func loadCharacters(currentPage: Int, completion: @escaping (Characters) -> Void){
-        AF.request("https://rickandmortyapi.com/api/character?page=\(currentPage)").responseDecodable(of: Characters.self) { response in
+    func loadCharacters(apipage: String, completion: @escaping (Characters) -> Void){
+        AF.request(apipage).responseDecodable(of: Characters.self) { response in
             guard let char_list = response.value else { return }
             completion(char_list)
         }
@@ -41,16 +41,17 @@ class MyLoader {
 
 
 struct Characters : Decodable{
-    //var info: info?
+    var info: CharactersInfo
     var results: [Character]?
     enum CodingKeys: String, CodingKey {
         case results = "results"
+        case info
     }
 }
-//struct info : Decodable {
-//    let count: String?
-//    let next: String?
-//}
+struct CharactersInfo : Decodable {
+    var count: Int
+    var next: String?
+}
 struct Character : Decodable {
     var name: String
     let image: String
